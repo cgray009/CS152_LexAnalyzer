@@ -17,8 +17,15 @@ txt	[0-9]
 ")"            {printf("R_PAREN\n"); currPos += yyleng;}
 ";"	       {printf("semicolon\n"); currPos += yyleng;}
 ":"		{printf("colon\n"); currPos += yyleng;}
-"<"		{printf("LT"); currPos += yyleng;}
+"<"		{printf("lt\n"); currPos += yyleng;}
 "_"		{printf("_"); currPos += yyleng;}
+","		{printf("comma\n"); currPos += yyleng;}
+"["            {printf("l_square_bracket\n"); currPos += yyleng;}
+"]"            {printf("r_square_bracket\n"); currPos += yyleng;}
+"%"            {printf("%\n"); currPos += yyleng;}
+"=="            {printf("==\n"); currPos += yyleng;}
+">="            {printf("gte\n"); currPos += yyleng;}
+">"		{printf("gt\n"); currPos += yyleng;}
 
 {ID}+"_"{ID}*	{printf("%s\n", yytext); currPos += yyleng;}
 
@@ -26,15 +33,17 @@ txt	[0-9]
 
 {DIGIT}+       {printf("NUMBER %s\n", yytext); currPos += yyleng;}
 
-"	"	{printf("INDENT "); currPos += yyleng;}
-
 [ \t]+         {currPos += yyleng;}
+
+"\n"+"	"         {printf("INDENT "); currPos += yyleng;}
+
+"\n"+" "         {printf("INDENT "); currPos += yyleng;}
 
 "\n"           {currLine++; currPos = 1;}
 
 {ID}		printf("%s\n", yytext);
 
-
+"##".*		 {}
 
 
 %%
