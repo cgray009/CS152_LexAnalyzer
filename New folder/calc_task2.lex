@@ -35,9 +35,6 @@ ID [a-z]+
 "true"		{printf("TRUE"); currPos += yyleng;}
 "false"		{printf("FALSE\n"); currPos += yyleng;}
 "return"            {printf("RETURN\n"); currPos += yyleng;}
-"]"            {printf("r_square_bracket\n"); currPos += yyleng;}
-"
-
 "-"            {printf("SUB\n"); currPos += yyleng;}
 "+"            {printf("ADD\n"); currPos += yyleng;}
 "*"            {printf("MULT\n"); currPos += yyleng;}
@@ -45,29 +42,31 @@ ID [a-z]+
 "="            {printf("E\n"); currPos += yyleng;}
 "("            {printf("L_PAREN\n"); currPos += yyleng;}
 ")"            {printf("R_PAREN\n"); currPos += yyleng;}
-";"	       {printf("semicolon\n"); currPos += yyleng;}
-":"		{printf("colon\n"); currPos += yyleng;}
-"<"		{printf("lt\n"); currPos += yyleng;}
+";"	       {printf("SEMICOLON\n"); currPos += yyleng;}
+":"		{printf("COLON\n"); currPos += yyleng;}
+"<"		{printf("LT\n"); currPos += yyleng;}
 "_"		{printf("_"); currPos += yyleng;}
-","		{printf("comma\n"); currPos += yyleng;}
-"["            {printf("l_square_bracket\n"); currPos += yyleng;}
-"]"            {printf("r_square_bracket\n"); currPos += yyleng;}
-"%"            {printf("%\n"); currPos += yyleng;}
-i"=="            {printf("==\n"); currPos += yyleng;}
-">="            {printf("gte\n"); currPos += yyleng;}
-">"		{printf("gt\n"); currPos += yyleng;}
-
-{ID}+"_"{ID}*	{printf("%s\n", yytext); currPos += yyleng;}
-
-":="		{printf("assign\n"); currPos += yyleng;}
+","		{printf("COMMA\n"); currPos += yyleng;}
+"["            {printf("L_SQUARE_BRACKET\n"); currPos += yyleng;}
+"]"            {printf("R_SQUARE_BRACKET\n"); currPos += yyleng;}
+"%"            {printf("MOD\n"); currPos += yyleng;}
+"=="            {printf("EQ\n"); currPos += yyleng;}
+">="            {printf("GTE\n"); currPos += yyleng;}
+">"		{printf("GT\n"); currPos += yyleng;}
+"<>"            {printf("NEQ\n"); currPos += yyleng;}
+"<="            {printf("LTE\n"); currPos += yyleng;}
+":="		{printf("ASSIGN\n"); currPos += yyleng;}
 
 {DIGIT}+       {printf("NUMBER %s\n", yytext); currPos += yyleng;}
-
+{ID}       {printf("IDENT %s\n", yytext); currPos += yyleng;}
 [ \t]+         {currPos += yyleng;}
 
 "\n"           {currLine++; currPos = 1;}
 
- 
+[A-Z]*+"_"+[A-Z]*	{printf("IDENT %s\n", yytext); currPos += yyleng;}
+[a-zA-Z]*+"_"{DIGIT}+	{printf("IDENT %s\n", yytext); currPos += yyleng;}
+[a-z]*+{DIGIT}+[a-z]*	{printf("IDENT %s\n", yytext); currPos += yyleng;}
+[a-z]*+"_"+[a-z]*	 {printf("IDENT %s\n", yytext); currPos += yyleng;}
 
 
 "##".*		 {}
