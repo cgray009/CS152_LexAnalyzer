@@ -18,7 +18,7 @@ ID [a-z]+
 "array"	       {printf("ARRAY\n"); currPos += yyleng;}
 "of"		{printf("OF\n"); currPos += yyleng;}
 "if"		{printf("IF\n"); currPos += yyleng;}
-"then"		{printf("THEN"); currPos += yyleng;}
+"then"		{printf("THEN\n"); currPos += yyleng;}
 "endif"		{printf("ENDIF\n"); currPos += yyleng;}
 "else"            {printf("ELSE\n"); currPos += yyleng;}
 "while"            {printf("WHILE\n"); currPos += yyleng;}
@@ -57,6 +57,14 @@ ID [a-z]+
 "<="            {printf("LTE\n"); currPos += yyleng;}
 ":="		{printf("ASSIGN\n"); currPos += yyleng;}
 
+
+{DIGIT}+{ID}	  {printf("Error at line %d, column %d: identifier \"%s\"\n must begin with letter", currLine, currPos, yytext); exit(0);}
+
+[a-z]+"_"	  {printf("Error at line %d, column %d: identifier \"%s\"\n cannot end with underscore", currLine, currPos, yytext); exit(0);}
+
+
+
+
 {DIGIT}+       {printf("NUMBER %s\n", yytext); currPos += yyleng;}
 {ID}       {printf("IDENT %s\n", yytext); currPos += yyleng;}
 [ \t]+         {currPos += yyleng;}
@@ -67,9 +75,9 @@ ID [a-z]+
 [a-zA-Z]*+"_"{DIGIT}+	{printf("IDENT %s\n", yytext); currPos += yyleng;}
 [a-z]*+{DIGIT}+[a-z]*	{printf("IDENT %s\n", yytext); currPos += yyleng;}
 [a-z]*+"_"+[a-z]*	 {printf("IDENT %s\n", yytext); currPos += yyleng;}
-
-
 "##".*		 {}
+
+.              {printf("Error at line %d, column %d: unrecognized symbol \"%s\"\n", currLine, currPos, yytext); exit(0);}
 
 
 %%
