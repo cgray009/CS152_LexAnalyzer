@@ -4,9 +4,39 @@
 
 DIGIT    [0-9]
 ID [a-z]+
-txt	[0-9]
+
    
 %%
+"function"	{printf("FUNCTION\n"); currPos += yyleng;}
+"beginparams"   {printf("BEGIN_PARAMS\n"); currPos += yyleng;}
+"endparams"            {printf("END_PARAMS\n"); currPos += yyleng;}
+"beginlocals"            {printf("BEGIN_LOCALS\n"); currPos += yyleng;}
+"endlocals"            {printf("END_LOCALS\n"); currPos += yyleng;}
+"beginbody"            {printf("BEGIN_BODY\n"); currPos += yyleng;}
+"endbody"            {printf("END_BODY\n"); currPos += yyleng;}
+"integer"            {printf("INTEGER\n"); currPos += yyleng;}
+"array"	       {printf("ARRAY\n"); currPos += yyleng;}
+"of"		{printf("OF\n"); currPos += yyleng;}
+"if"		{printf("IF\n"); currPos += yyleng;}
+"then"		{printf("THEN"); currPos += yyleng;}
+"endif"		{printf("ENDIF\n"); currPos += yyleng;}
+"else"            {printf("ELSE\n"); currPos += yyleng;}
+"while"            {printf("WHILE\n"); currPos += yyleng;}
+"do"            {printf("DO\n"); currPos += yyleng;}
+"for"            {printf("FOR\n"); currPos += yyleng;}
+"beginloop"            {printf("BEGINLOOP\n"); currPos += yyleng;}
+"endloop"            {printf("ENDLOOP\n"); currPos += yyleng;}
+"continue"            {printf("CONTINUE\n"); currPos += yyleng;}
+"read"            {printf("READ\n"); currPos += yyleng;}
+"write"            {printf("WRITE\n"); currPos += yyleng;}
+"and"	       {printf("AND\n"); currPos += yyleng;}
+"or"		{printf("OR\n"); currPos += yyleng;}
+"not"		{printf("NOT\n"); currPos += yyleng;}
+"true"		{printf("TRUE"); currPos += yyleng;}
+"false"		{printf("FALSE\n"); currPos += yyleng;}
+"return"            {printf("RETURN\n"); currPos += yyleng;}
+"]"            {printf("r_square_bracket\n"); currPos += yyleng;}
+"
 
 "-"            {printf("SUB\n"); currPos += yyleng;}
 "+"            {printf("ADD\n"); currPos += yyleng;}
@@ -23,7 +53,7 @@ txt	[0-9]
 "["            {printf("l_square_bracket\n"); currPos += yyleng;}
 "]"            {printf("r_square_bracket\n"); currPos += yyleng;}
 "%"            {printf("%\n"); currPos += yyleng;}
-"=="            {printf("==\n"); currPos += yyleng;}
+i"=="            {printf("==\n"); currPos += yyleng;}
 ">="            {printf("gte\n"); currPos += yyleng;}
 ">"		{printf("gt\n"); currPos += yyleng;}
 
@@ -35,18 +65,16 @@ txt	[0-9]
 
 [ \t]+         {currPos += yyleng;}
 
-"\n"+"	"         {printf("INDENT "); currPos += yyleng;}
-
-"\n"+" "         {printf("INDENT "); currPos += yyleng;}
-
 "\n"           {currLine++; currPos = 1;}
 
-{ID}		printf("%s\n", yytext);
+ 
+
 
 "##".*		 {}
 
 
 %%
+
 
 int main(int argc, char ** argv)
 {
